@@ -1,0 +1,22 @@
+services:
+  survey.api:
+    image: survey-image
+    restart: always
+    container_name: survey.api
+    build: .
+    ports:
+      - "9998:8080"
+    environment:
+      - "Environment=Production"
+      - "ConnectionString=User ID=postgres;Password=qwerty13;Host=survey.db;Port=5432;Pooling=true;Database=Surveyis;Minimum Pool Size=0;Maximum Pool Size=100;Connection Lifetime=0;"
+    links:
+      - survey.db
+
+  survey.db:
+    image: postgres:latest
+    restart: always
+    container_name: survey.db
+    environment:
+      - "POSTGRES_PASSWORD=qwerty13"
+    ports:
+      - "6543:5432"
